@@ -1,0 +1,52 @@
+name: Vue build action
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: Deploy Application
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [12.x, 14.x, 16.x]
+    steps:
+        - name: Checkout Repo
+          uses: actions/checkout@v3
+        - name: Use Node.js ${{ matrix.node-version }}
+          uses: actions/setup-node@v3
+          with: 
+            node-version: ${{ matrix.node-version }}
+        - name: Install Packages and Build Application
+          run: |
+            npm install -g @vue/cli yarn
+            yarn install
+            yarn build
+        - name: Deploy
+          uses: s0/git-publish-subdir-action@develop
+          env:
+            REPO: self
+            BRANCH: master
+            FOLDER: dist
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  # build:
+  #   runs-on: ubuntu-latest
+
+  #   strategy:
+  #     matrix:
+  #       node-version: [12.x, 14.x, 16.x]
+    
+  #   steps:
+  #   - uses: actions/checkout@v3
+
+  #   - name: Use Node.js ${{ matrix.node-version }}
+  #     uses: actions/setup-node@v3
+  #     with:
+  #       node-version: ${{ matrix.node-version }}
+
+  #   - name: Build
+  #     run: |
+  #       npm test
