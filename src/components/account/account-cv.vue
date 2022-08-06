@@ -29,9 +29,11 @@
                         md:mx-0
                     "
                 >
-                    <div class="text-orange-500 font-medium">Заказчик</div>
+                    <div class="text-orange-500 font-medium"> 
+                        {{ OnCreater() }}
+                    </div>
                     <h2 class="text-xl font-medium mb-2">
-                        Sasha Raimov Doniyorovich
+                        {{ profile.surname }} {{ profile.name }}
                     </h2>
                     <div class="text-green-600 leading-none mb-2">
                         <span
@@ -69,8 +71,9 @@
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M5 13l4 4L19 7"
-                                ></path></svg
-                            >Паспорт проверен
+                                ></path>
+                                </svg>
+                            Паспорт проверен
                         </div>
                     </div>
                 </div>
@@ -122,6 +125,20 @@
     </account-section>
 </template>
 
+
 <script setup>
 import AccountSection from "./account-section.vue";
+
+import useProfile from "@/composables/profile";
+
+const { profile } = useProfile();
+
+function OnCreater() {
+    if(profile.type == "customer"){
+        return "Заказчик";
+    } else {
+        return "Исполнитель";
+    }
+}
+
 </script>

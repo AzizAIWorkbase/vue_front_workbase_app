@@ -5,7 +5,7 @@
             <p class="text-gray-500">Убедитесь в правильности заполнения</p>
         </template>
         <template #default>
-            <div class="grid grid-cols-3 gap-4 -mx-1">
+            <form class="grid grid-cols-3 gap-4 -mx-1">
                 <wb-input
                     label="Имя"
                     :disabled="!isEditing"
@@ -54,7 +54,7 @@
                     placeholder="Не указан"
                     type="text"
                 ></wb-input>
-            </div>
+            </form>
         </template>
         <template #footer>
             <div class="flex gap-4">
@@ -88,6 +88,11 @@ import WbSelect from "./wb-select";
 import WbButton from "./wb-button";
 import AccountSection from "./account-section";
 import useProfile from "@/composables/profile";
+// import { METHODS } from "http";
+// import axios from "axios";
+// import { response } from "express";
+// import { error } from "console";
+// import { update } from "@/api/profile";
 
 const isEditing = ref(false);
 const { onGet, profile } = useProfile();
@@ -99,11 +104,22 @@ watch(isLoaded, () => {
 });
 
 const state = reactive({
-    name: "",
-    surname: "",
-    patronymic: "",
-    birthday: "",
-    gender: null,
-    address: "",
+    name: profile.value.name,
+    surname: profile.value.surname,
+    patronymic: profile.value.patronymic,
+    birthday: profile.value.birthday,
+    gender: profile.value.gender,
+    address: profile.value.address,
 });
+// methods: {
+//     saveData() {
+//         axios.post('', this.state).then(
+//             response => {
+//                 update(response);
+//             }
+//         ).catch(error => {
+//             console.log('Error here');
+//         })
+//     }
+// }
 </script>
