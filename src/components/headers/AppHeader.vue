@@ -63,7 +63,7 @@ header .swiper-wrapper {
 					items-center
 				"
 			>
-				<router-link to="/" class="py-2 mr-12 my-auto w-36 md:w-40">
+				<router-link to="/account" class="py-2 mr-12 my-auto w-36 md:w-40">
 					<img
 						:src="
 							require(`@/assets/logo${
