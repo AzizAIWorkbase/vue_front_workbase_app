@@ -31,7 +31,7 @@ jobs:
             REPO: self
             BRANCH: master
             FOLDER: dist
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: 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
   # build:
   #   runs-on: ubuntu-latest
 
