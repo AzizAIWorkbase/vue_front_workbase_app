@@ -282,12 +282,17 @@
 		$externalResults: registerExternalResults,
 	});
 	const registerErrorMessage = ref();
-	const onRegisterHandler = async () => {
+	const onRegisterHandler = async (event) => {
+
+		const type = event.submitter.value;
+		Object.assign(registerState, { type });
+		
+		// form validation
 		if (!(await registerValidator.value.$validate())) return;
 
 		onRegister(registerState).catch(({ response }) => {
+			console.log(response.data);
 			const { type, fields, message } = response.data.error;
-
 			if (type == "validation") {
 				Object.assign(registerExternalResults, fields);
 			}
@@ -297,6 +302,7 @@
 			}
 			throw new Error({ type, fields, message });
 		});
+		
 		emit("successful", profile.value);
 	};
 </script>
