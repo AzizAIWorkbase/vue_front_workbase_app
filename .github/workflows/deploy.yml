@@ -26,11 +26,13 @@ jobs:
             yarn install
             yarn build
         - name: Deploy
-          uses: AzizAIWorkbase/vue_front_workbase_app@develop
+          uses: AzizAIWorkbase/vue_front_workbase_app@1.0.1
           env:
             REPO: self
             BRANCH: master
             FOLDER: dist
+            USERNAME: AzizAIWorkbase
+            REPONAME: vue_front_workbase_app
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   # build:
   #   runs-on: ubuntu-latest
