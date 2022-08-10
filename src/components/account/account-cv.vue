@@ -8,7 +8,7 @@
             <div class="flex flex-col md:flex-row">
                 <div class="rounded-full mx-auto md:mx-0">
                     <img
-                        src="@/assets/images/user.png"
+                        :src="image_url"
                         class="
                             w-32
                             h-32
@@ -18,6 +18,10 @@
                             duration-200
                         "
                     />
+                    <input class="form-control-file d-none" type="file" @change="handle" hidden ref="file"  accept="image/*" name="img">
+                    <wb-button @click="$refs.file.click()" class="btn btn-outline-primary btn-block mt-2">
+                        <i class="fa fa-image"></i> Choose Image
+                    </wb-button>
                 </div>
                 <div
                     class="
@@ -78,6 +82,11 @@
         </template>
         <template #footer>
             <div class="gap-4 flex flex-wrap justify-center md:justify-start">
+                <div class="flex gap-4">
+                    <wb-button :disabled="!isNamePresent" type="primary" @click="uploadImage">
+                        Upload
+                    </wb-button>
+                </div>
                 <div class="">
                     <span>
                         <svg
@@ -123,5 +132,43 @@
 </template>
 
 <script setup>
+import { onMounted, reactive, ref, watch, computed } from "vue";
 import AccountSection from "./account-section.vue";
+import WbButton from "./wb-button";
+import { storaImage } from "@/api/uploadImageService"
+
+
+import useProfile from "@/composables/profile";
+const { profile } = useProfile();
+
+
+
+const image_url = computed(()=>{
+    return profile.value.avatar != "" ? profile.value.avatar : require(`../../assets/images/user.png`);
+});
+
+
+const isEditing = ref(false);
+const newImage = ref('');
+
+
+
+const file = reactive({});
+const isNamePresent = computed(() => file.value != null)
+
+
+function handle(event){
+    file.value = event.target.files[0];
+}
+
+function uploadImage(){
+    storaImage(file.value, profile.value.id)
+        .then((response) => {
+            newImage.value = response.data?.data;
+
+            let StorageItem = JSON.parse(localStorage.getItem(`profile`));
+            StorageItem.avatar = newImage.value;
+            localStorage.setItem(`profile`, JSON.stringify(StorageItem));
+        });
+}
 </script>
