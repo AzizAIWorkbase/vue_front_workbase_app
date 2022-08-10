@@ -30,15 +30,15 @@
 							rounded-full
 							ring-2 ring-white
 						"
-						src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-						alt=""
+						src="@/assets/images/user.png"
+						alt="user default avatar"
 					/>
 				</div>
 				<div class="flex items-center">
 					<span
 						class="mr-1 text-base text-white"
 						:class="{ 'xl:text-black': headerType != 'secondary' }"
-						>{{ type_user() }}</span
+						>{{ type_user }}</span
 					>
 					<svg
 						class="w-4 h-4 text-white"
@@ -90,7 +90,7 @@
 						xl:text-primary
 					"
 				>
-					{{ anti_type_user() }}
+					{{ anti_type_user }}
 				</router-link>
 				<a
 					@click.prevent.stop="!isLoading ? onLogout() : null"
@@ -122,10 +122,11 @@
 <script setup>
 	import { useLogout } from "@/composables/auth";
 	import useProfile from "@/composables/profile";
-	import { computed, onMounted, onUnmounted, ref } from "@vue/runtime-core";
-	import { useRoute } from "vue-router";
+	import { computed, onMounted, onUnmounted, ref, watch } from "@vue/runtime-core";
+	import { useRoute, useRouter } from "vue-router";
 	const show = ref(false);
 	const route = useRoute();
+	const router = useRouter();
 
 	const { profile } = useProfile();
 
@@ -148,19 +149,30 @@
 		document.removeEventListener("keyup", escapePressedListener);
 		document.removeEventListener("click", outsideClickListener);
 	});
-	const type_user = ()=>{
+
+	const type_user = computed(()=>{
 		if(profile.value.type == "customer"){
 			return "Я заказчик";
 		} else {
 			return "Я исполнитель";
 		}
-	};
-	const anti_type_user = ()=>{
+	});
+	const anti_type_user = computed(()=>{
 		if(profile.value.type == "customer"){
 			return "Я исполнитель";
 		} else {
 			return "Я заказчик" ;
 		}
-	};
+	});
+	watch(isLoading,() => {
+			console.log(isLoading.value);
+			if(isLoading.value===false){
+				router.push({
+					name:'home'
+				});
+			}
+		}
+	);
+
 	// console.log(type_user());
 </script>

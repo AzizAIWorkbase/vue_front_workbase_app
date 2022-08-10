@@ -64,7 +64,8 @@
 </template>
 
 <script setup>
-	import { useLogin } from "@/composables/auth";
+	import { useLogin, isAuthentificated } from "@/composables/auth";
+	import { useRouter, useRoute } from 'vue-router'
 	import { ProfileType } from "@/utils/enums";
 	import useVuelidate from "@vuelidate/core";
 	import { helpers, required, sameAs } from "@vuelidate/validators";
@@ -72,6 +73,9 @@
 	import { reactive, ref, watch } from "vue";
 
 	const emit = defineEmits(["successful"]);
+	
+	const router = useRouter()
+    const route = useRoute()
 
 	const { onLogin, isLogining, profile, isLogined } = useLogin();
 
@@ -97,6 +101,17 @@
 		() => loginState.type,
 		() => {
 			loginExternalResults.type = [];
+		}
+	);
+
+	watch(isAuthentificated,() => {
+			console.log("Logined "+ isLogined.value);
+			console.log("Auth "+ isAuthentificated.value);
+			if(loginState.type==="executor" && isAuthentificated.value===true){
+				router.push({
+					name:'account'
+				});
+			}
 		}
 	);
 
@@ -127,19 +142,25 @@
 	const loginErrorMessage = ref();
 
 	const onLoginHandler = async (event) => {
+		
 		const type = event.submitter.value;
 		Object.assign(loginState, { type });
+
 		if (!(await loginValidator.value.$validate())) return;
+
 		await onLogin(loginState).catch(({ response }) => {
 			const { type, fields, message } = response.data.error;
+			
 			if (type == "validation") {
 				Object.assign(loginExternalResults, fields);
 			}
 			if (type == "auth") {
 				loginErrorMessage.value = message;
 			}
+			
 			throw new Error({ type, fields, message });
 		});
+		
 		emit("successful", profile.value);
 	};
 </script>
