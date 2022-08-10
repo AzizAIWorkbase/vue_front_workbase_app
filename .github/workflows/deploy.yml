@@ -26,7 +26,7 @@ jobs:
             yarn install
             yarn build
         - name: Deploy
-          uses: AzizAIWorkbase/vue_front_workbase_app@1.0.1
+          uses: AzizAIWorkbase/vue_front_workbase_app@master
           env:
             REPO: self
             BRANCH: master
