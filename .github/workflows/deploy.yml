@@ -23,10 +23,10 @@ jobs:
         - name: Install Packages and Build Application
           run: |
             npm install -g @vue/cli yarn
-            yarn install
-            yarn build
+            npm install
+            npm build
         - name: Deploy
-          uses: s0/git-publish-subdir-action@develop
+          uses: AzizAIWorkbase/vue_front_workbase_app@develop
           env:
             REPO: self
             BRANCH: master
