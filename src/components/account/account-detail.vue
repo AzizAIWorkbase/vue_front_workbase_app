@@ -106,7 +106,4 @@ const state = reactive({
     gender: null,
     address: "",
 });
-console.log(state);
-console.log(profile.value);
-console.log(isLoaded.value);
 </script>

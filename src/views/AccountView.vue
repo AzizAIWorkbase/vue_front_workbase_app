@@ -138,11 +138,6 @@ import useProfile from "@/composables/profile/index.js";
 
 const { profile, onGet } = useProfile();
 const { exec, isLoading, isLoaded } = onGet();
-onMounted(async () => {
-    await exec();
-    console.log(profile.value);
-});
-
 const items = reactive({
     cv: {
         label: "Мой профиль",
