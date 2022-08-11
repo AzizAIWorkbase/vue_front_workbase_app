@@ -142,20 +142,18 @@ import useProfile from "@/composables/profile";
 const { profile } = useProfile();
 
 
+const newImage = ref(profile.value.avatar);
+
 
 const image_url = computed(()=>{
-    return profile.value.avatar != "" ? profile.value.avatar : require(`../../assets/images/user.png`);
+    return newImage.value != "" ? newImage.value : require('../../assets/images/user.png');
 });
 
-
 const isEditing = ref(false);
-const newImage = ref('');
-
-
 
 const file = reactive({});
 const isNamePresent = computed(() => file.value != null)
-
+const isLoadImage = ref(false);
 
 function handle(event){
     file.value = event.target.files[0];
@@ -165,10 +163,15 @@ function uploadImage(){
     storaImage(file.value, profile.value.id)
         .then((response) => {
             newImage.value = response.data?.data;
-
-            let StorageItem = JSON.parse(localStorage.getItem(`profile`));
+            let StorageItem = JSON.parse(localStorage.getItem("profile"));
+            console.log(StorageItem);
             StorageItem.avatar = newImage.value;
-            localStorage.setItem(`profile`, JSON.stringify(StorageItem));
+            localStorage.setItem("profile", JSON.stringify(StorageItem));
+            localStorage.setItem("new_image",newImage.value);
+            isLoadImage.value = true;
+        }).finally((response)=>{
+            file.value = null;
+            isLoadImage.value = true;
         });
 }
 </script>
