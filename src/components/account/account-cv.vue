@@ -18,10 +18,18 @@
                             duration-200
                         "
                     />
-                    <input class="form-control-file d-none" type="file" @change="handle" hidden ref="file"  accept="image/*" name="img">
-                    <wb-button @click="$refs.file.click()" class="btn btn-outline-primary btn-block mt-2">
-                        <i class="fa fa-image"></i> Choose Image
-                    </wb-button>
+                    <input class="form-control-file d-none" id="myfile" type="file" @change="handle" hidden ref="file"  accept="image/*" name="img">
+                    <label class="select-none
+                                    text-white
+                                    bg-primary
+                                    rounded-md
+                                    px-4
+                                    py-2
+                                    transition-all
+                                    duration-200
+                                    shadow-lg
+                                    transform
+                                    scale-100" for="myfile">Choose file</label>
                 </div>
                 <div
                     class="
