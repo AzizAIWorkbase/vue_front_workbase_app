@@ -3,7 +3,7 @@ name: Vue build action
 on:
   push:
     branches: [ main ]
-  pull_request:
+  pull:
     branches: [ main ]
 
 jobs:
@@ -15,7 +15,7 @@ jobs:
         node-version: [16.x]
     steps:
         - name: Checkout Repo
-          uses: actions/checkout@v3
+          uses: actions/checkout@v2
         - name: Use Node.js ${{ matrix.node-version }}
           uses: actions/setup-node@v3
           with: 
@@ -26,27 +26,11 @@ jobs:
             npm install
             npm build
         - name: Deploy
-          uses: AzizAIWorkbase/vue_front_workbase_app@develop
+          uses: AzizAIWorkbase/vue_front_workbase_app@master
           env:
             REPO: self
             BRANCH: master
             FOLDER: dist
-            GITHUB_TOKEN: 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
-  # build:
-  #   runs-on: ubuntu-latest
-
-  #   strategy:
-  #     matrix:
-  #       node-version: [12.x, 14.x, 16.x]
-    
-  #   steps:
-  #   - uses: actions/checkout@v3
-
-  #   - name: Use Node.js ${{ matrix.node-version }}
-  #     uses: actions/setup-node@v3
-  #     with:
-  #       node-version: ${{ matrix.node-version }}
-
-  #   - name: Build
-  #     run: |
-  #       npm test
+            USERNAME: AzizAIWorkbase
+            REPONAME: vue_front_workbase_app
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
