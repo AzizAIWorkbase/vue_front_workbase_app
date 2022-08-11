@@ -30,7 +30,7 @@
 							rounded-full
 							ring-2 ring-white
 						"
-						src="@/assets/images/user.png"
+						:src="image_url()"
 						alt="user default avatar"
 					/>
 				</div>
@@ -173,6 +173,21 @@
 			}
 		}
 	);
-
-	// console.log(type_user());
+	console.log('App header in outside');
+	const image_url = ()=>{
+		if(localStorage.getItem('profile') != null){
+			return profile.value?.avatar != "" ? profile.value.avatar : require('../../assets/images/user.png');
+		}else {
+			return require('../../assets/images/user.png');
+		}
+	};
+	// // let profile_local = JSON.parse(ls.get('profile'));
+	// console.log('new image localstorage');
+	// console.log(ls.getItem('new_image').value);
+	// console.log(ls.getItem('token').value);
+	// // ls.on('new_image',()=>{
+	// // 	console.log('App header on profile ls');
+	// // 	console.log('I am watching profile value');
+	// // });
+	
 </script>
