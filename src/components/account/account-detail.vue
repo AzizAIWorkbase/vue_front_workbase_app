@@ -86,13 +86,9 @@ import { onMounted, reactive, ref, watch } from "vue";
 import WbInput from "./wb-input";
 import WbSelect from "./wb-select";
 import WbButton from "./wb-button";
-import AccountSection from "./account-section";
+import AccountSection from "./account-section.vue";
 import useProfile from "@/composables/profile";
-// import { METHODS } from "http";
-// import axios from "axios";
-// import { response } from "express";
-// import { error } from "console";
-// import { update } from "@/api/profile";
+import { Gender } from "@/utils/enums";
 
 const isEditing = ref(false);
 const { onGet, profile } = useProfile();
@@ -111,15 +107,4 @@ const state = reactive({
     gender: profile.value.gender,
     address: profile.value.address,
 });
-// methods: {
-//     saveData() {
-//         axios.post('', this.state).then(
-//             response => {
-//                 update(response);
-//             }
-//         ).catch(error => {
-//             console.log('Error here');
-//         })
-//     }
-// }
 </script>

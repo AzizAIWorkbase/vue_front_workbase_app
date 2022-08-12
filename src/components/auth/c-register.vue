@@ -247,7 +247,7 @@
 			required: helpers.withMessage("Введите номер телефона", required),
 		},
 		email: {
-			required: helpers.withMessage("Введите емэил", required),
+			required: helpers.withMessage("Введите эмеил", required),
 			email: helpers.withMessage("Введите корректный емэил", email),
 		},
 		password: {

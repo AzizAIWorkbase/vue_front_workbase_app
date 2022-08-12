@@ -10,18 +10,21 @@
                 :disabled="!isEditing"
                 label="Коротко о себе"
                 :loading="isLoading"
+                placeholder="Не указано"
             ></wb-textarea>
             <wb-textarea
                 v-model="state.description"
                 :disabled="!isEditing"
                 label="Подробно о себе"
                 :loading="isLoading"
+                placeholder="Не указано"
             ></wb-textarea>
             <wb-textarea
                 v-model="state.education"
                 :disabled="!isEditing"
                 label="Образование и опыт работы"
                 :loading="isLoading"
+                placeholder="Не указано"
             ></wb-textarea>
         </template>
         <template #footer>

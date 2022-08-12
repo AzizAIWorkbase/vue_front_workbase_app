@@ -30,7 +30,7 @@
                     "
                 >
                     <div class="text-orange-500 font-medium"> 
-                        {{ OnCreater() }}
+                        {{ OnCreater(profile.type) }}
                     </div>
                     <h2 class="text-xl font-medium mb-2">
                         {{ profile.surname }} {{ profile.name }}
@@ -44,8 +44,8 @@
                                 bg-green-600
                                 inline-block
                             "
-                        ></span>
-                        Онлайн
+                        ></span> 
+                        Online
                     </div>
                     <div class="mb-2">
                         <div
@@ -98,7 +98,7 @@
                             ></path>
                         </svg>
                     </span>
-                    <span> 55 Отзывов </span>
+                    <span> Отзывов </span>
                 </div>
                 <div class="">
                     <span>
@@ -130,11 +130,15 @@
 import AccountSection from "./account-section.vue";
 
 import useProfile from "@/composables/profile";
+import axios from "@/utils/axios";
+import usePosts from "@/composables/posts";
+import useApi from "@/composables/api";
+import {useAttrs} from "vue";
 
 const { profile } = useProfile();
 
-function OnCreater() {
-    if(profile.type == "customer"){
+function OnCreater(a) {
+    if(a == "customer"){
         return "Заказчик";
     } else {
         return "Исполнитель";
