@@ -144,6 +144,7 @@ import { onMounted, reactive, ref, watch, computed } from "vue";
 import AccountSection from "./account-section.vue";
 import WbButton from "./wb-button";
 import { storaImage } from "@/api/uploadImageService"
+import store from '../../store/index.js'
 
 
 import useProfile from "@/composables/profile";
@@ -176,6 +177,7 @@ function uploadImage(){
             StorageItem.avatar = newImage.value;
             localStorage.setItem("profile", JSON.stringify(StorageItem));
             localStorage.setItem("new_image",newImage.value);
+            store.commit('changeImgUrl', newImage.value);
             isLoadImage.value = true;
         }).finally((response)=>{
             file.value = null;
