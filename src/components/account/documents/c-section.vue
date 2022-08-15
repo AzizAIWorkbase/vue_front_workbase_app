@@ -7,18 +7,14 @@
 				</h2>
 				<p class="text-gray-500">Загрузите ваши документы</p>
 			</div>
-			<div
-				class="
+			<div class="
 					md:grid
 					grid-cols-1
 					md:grid-cols-2
 					lg:grid-cols-3
 					gap-4
-					mt-5
-				"
-			>
-				<div
-					class="
+					mt-5">
+				<div class="
 						border-dashed border border-gray-300
 						hover:border-solid
 						transition
@@ -33,11 +29,8 @@
 						flex flex-col
 						justify-center
 						mb-3
-						h-40
-					"
-				>
-					<div
-						class="
+						h-40 ">
+					<div class="
 							flex
 							justify-center
 							items-center
@@ -47,9 +40,7 @@
 							w-10
 							h-10
 							text-white
-							rounded-full
-						"
-					>
+							rounded-full">
 						<div class="">
 							<svg
 								class="w-6 h-6 stroke-primary"
@@ -57,8 +48,7 @@
 								fill="none"
 								viewBox="0 0 24 24"
 								stroke="currentColor"
-								stroke-width="2"
-							>
+								stroke-width="2">
 								<path
 									stroke-linecap="round"
 									stroke-linejoin="round"
@@ -68,7 +58,8 @@
 						</div>
 					</div>
 					<div class="">
-						<p class="text-gray-400 m-auto">Добавить документ</p>
+						<label class="text-gray-400 m-auto" for="docs">Добавить документ</label>
+						<input type="file" name="documents[]" @change="uploadFile" hidden multiple id="docs">
 					</div>
 				</div>
 			</div>
@@ -78,10 +69,12 @@
 
 <script setup>
 	import useProfile from "@/composables/profile";
-	import { onMounted, ref } from "vue";
+	import { onMounted, ref,reactive } from "vue";
 	import AccountSection from "../account-section.vue";
 	import WbButton from "../wb-button.vue";
 	import WbSelect from "../wb-select.vue";
+	import { uploadMultiFiles, getUploadMultiFiles } from "@/api/uploadImageService";
+	const { profile } = useProfile();
 
 	const isActiveRapair = ref(false);
 	const isAddNew = ref(true);
@@ -96,4 +89,30 @@
 			console.log("waited");
 		}
 	});
+
+	const files = reactive({});
+	const data = reactive({});
+
+	function uploadFile(event){
+    	files.value = event.target.files;
+		console.log(files);
+		let isUpload = false;
+		
+		uploadMultiFiles(files.value, profile.value.id, "certificates")
+		.then((response)=>{
+			isUpload = response.data;
+			console.log('isUpload '+response.data);
+		});
+
+		if(isUpload == true){
+			getUploadMultiFiles(profile.value.id, "certificates")
+			.then((response)=>{
+				data = response.data;
+				console.log('data '+ data)
+			});
+		}
+
+		console.log(data);
+	}
+
 </script>

@@ -124,11 +124,13 @@
 	import useProfile from "@/composables/profile";
 	import { computed, onMounted, onUnmounted, ref, watch } from "@vue/runtime-core";
 	import { useRoute, useRouter } from "vue-router";
+	import { useStore } from 'vuex'
 	const show = ref(false);
 	const route = useRoute();
 	const router = useRouter();
 
 	const { profile } = useProfile();
+	const store = useStore();
 
 	const { isLoading, data, error, onLogout } = useLogout();
 
@@ -176,11 +178,13 @@
 	console.log('App header in outside');
 	const image_url = ()=>{
 		if(localStorage.getItem('profile') != null){
-			return profile.value?.avatar != "" ? profile.value.avatar : require('../../assets/images/user.png');
+			return store.state.profile?.avatar != "" ? store.state.profile.avatar : require('../../assets/images/user.png');
 		}else {
 			return require('../../assets/images/user.png');
 		}
 	};
+
+	console.log('profile state '+store.state.profile.avatar);
 	// // let profile_local = JSON.parse(ls.get('profile'));
 	// console.log('new image localstorage');
 	// console.log(ls.getItem('new_image').value);
