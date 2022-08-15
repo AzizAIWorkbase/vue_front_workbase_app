@@ -124,6 +124,7 @@
 	import useProfile from "@/composables/profile";
 	import { computed, onMounted, onUnmounted, ref, watch } from "@vue/runtime-core";
 	import { useRoute, useRouter } from "vue-router";
+  import store from '../../store/index.js';
 	const show = ref(false);
 	const route = useRoute();
 	const router = useRouter();
@@ -174,13 +175,27 @@
 		}
 	);
 	console.log('App header in outside');
-	const image_url = ()=>{
-		if(localStorage.getItem('profile') != null){
-			return profile.value?.avatar != "" ? profile.value.avatar : require('../../assets/images/user.png');
-		}else {
+	
+		
+	const image_url = () => {
+		if( store.state.avatar_url != null){
+			return store.state.avatar_url;
+		} 
+		else if (localStorage.getItem('profile') != null){
+			return profile.value.avatar; 
+		}
+		else {
 			return require('../../assets/images/user.png');
 		}
 	};
+
+	// const image_url = ()=>{
+	// 	if(localStorage.getItem('profile') != null){
+	// 		return profile.value?.avatar != "" ? profile.value.avatar : require('../../assets/images/user.png');
+	// 	}else {
+	// 		return require('../../assets/images/user.png');
+	// 	}
+	// };
 	// // let profile_local = JSON.parse(ls.get('profile'));
 	// console.log('new image localstorage');
 	// console.log(ls.getItem('new_image').value);
