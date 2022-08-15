@@ -64,8 +64,8 @@ watch(isLoaded, () => {
 });
 
 const state = reactive({
-    education: "",
-    excerpt: "",
-    description: "",
+    education: profile.value.education,
+    excerpt: profile.value.excerpt,
+    description: profile.value.description,
 });
 </script>

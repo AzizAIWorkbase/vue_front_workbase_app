@@ -41,9 +41,9 @@
                         md:mx-0
                     "
                 >
-                    <div class="text-orange-500 font-medium">Заказчик</div>
+                    <div class="text-orange-500 font-medium">{{ OnCreater(profile.type) }}</div>
                     <h2 class="text-xl font-medium mb-2">
-                        Sasha Raimov Doniyorovich
+                        {{ profile.surname }} {{ profile.name }}
                     </h2>
                     <div class="text-green-600 leading-none mb-2">
                         <span
@@ -181,5 +181,13 @@ function uploadImage(){
             file.value = null;
             isLoadImage.value = true;
         });
+}
+
+function OnCreater(a) {
+    if(a == "customer"){
+        return "Заказчик";
+    } else {
+        return "Исполнитель";
+    }
 }
 </script>
