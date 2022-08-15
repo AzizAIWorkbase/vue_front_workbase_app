@@ -30,7 +30,7 @@
 							rounded-full
 							ring-2 ring-white
 						"
-						src="@/assets/images/user.png"
+						:src="image_url()"
 					/>
 				</div>
 				<div class="flex items-center">
@@ -175,13 +175,13 @@
 		}
 	);
 	console.log('App header in outside');
-	// const image_url = ()=>{
-	// 	if(localStorage.getItem('profile') != null){
-	// 		return store.state.profile?.avatar != "" ? store.state.profile.avatar : require('../../assets/images/user.png');
-	// 	}else {
-	// 		return require('../../assets/images/user.png');
-	// 	}
-	// };
+	const image_url = ()=>{
+		// if(localStorage.getItem('profile') != null){
+			return profile?.value.avatar != "" ? profile.value.avatar : require('../../assets/images/user.png');
+		// }else {
+			// return require('../../assets/images/user.png');
+		// }
+	};
 
 	// console.log('profile state '+store.state.profile.avatar);
 	// // let profile_local = JSON.parse(ls.get('profile'));
