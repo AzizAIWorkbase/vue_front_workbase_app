@@ -7,7 +7,7 @@ import CDropdown from "@/components/c-dropdown";
 import CDropdownItem from "@/components/c-dropdown-item";
 import './assets/styles/tailwind.css';
 import './assets/fonts/Aeroport/stylesheet.css';
-
+import store from './store'
 import * as HeroIcons from '@/components/icons/hero';
 import * as UI from '@/components/ui';
 import i18n from './I18n';
@@ -31,5 +31,6 @@ app.component('c-grid', CGrid)
     .component('c-dropdown-item', CDropdownItem)
     .use(i18n)
     .use(router)
+    .use(store)
     .use(pusher)
     .mount('#app')
