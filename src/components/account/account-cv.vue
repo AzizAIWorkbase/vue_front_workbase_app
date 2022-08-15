@@ -18,7 +18,7 @@
                             duration-200
                         "
                     />
-                    <input class="form-control-file d-none" id="myfile" type="file" @change="handle" hidden ref="file"  accept="image/*" name="img">
+                    <input class="form-control-file d-none" id="myfile" type="file" @change="handle" hidden accept="image/*" name="img">
                     <label class="select-none
                                     text-white
                                     bg-primary
@@ -81,7 +81,7 @@
                                     stroke-linejoin="round"
                                     stroke-width="2"
                                     d="M5 13l4 4L19 7"
-                                ></path></svg
+                                ></path></svg>
                             >Паспорт проверен
                         </div>
                     </div>
