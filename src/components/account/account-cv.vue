@@ -173,7 +173,6 @@ function uploadImage(){
         .then((response) => {
             newImage.value = response.data?.data;
             let StorageItem = JSON.parse(localStorage.getItem("profile"));
-            console.log(StorageItem);
             StorageItem.avatar = newImage.value;
             localStorage.setItem("profile", JSON.stringify(StorageItem));
             localStorage.setItem("new_image",newImage.value);

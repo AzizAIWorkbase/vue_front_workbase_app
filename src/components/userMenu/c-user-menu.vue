@@ -70,8 +70,9 @@
 					xl:border-primary
 				"
 			>
-				<router-link
+				<button
 					to="/"
+					@click="swapUserType"
 					class="
 						xl:flex
 						block
@@ -90,7 +91,7 @@
 					"
 				>
 					{{ anti_type_user }}
-				</router-link>
+				</button>
 				<a
 					@click.prevent.stop="!isLoading ? onLogout() : null"
 					href="javascript:;"
@@ -188,13 +189,18 @@
 			return require('../../assets/images/user.png');
 		}
 	};
-	// // let profile_local = JSON.parse(ls.get('profile'));
-	// console.log('new image localstorage');
-	// console.log(ls.getItem('new_image').value);
-	// console.log(ls.getItem('token').value);
-	// // ls.on('new_image',()=>{
-	// // 	console.log('App header on profile ls');
-	// // 	console.log('I am watching profile value');
-	// // });
-	
+	const swapUserType = ()=>{
+		let user_type = store.state.profileStore.type;
+		console.log(store.state.profileStore);
+		//let StorageItem = JSON.parse(localStorage.getItem("profile"));
+        user_type = user_type == "executor" ? "customer" : "executor";
+        //localStorage.setItem("profile", JSON.stringify(StorageItem));
+		store.state.profileStore.type = user_type;
+		
+		if(store.state.profileStore.type == "executor"){
+			router.push('/account');
+		}else{
+			router.push('/');
+		}
+	};
 </script>
