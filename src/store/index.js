@@ -1,7 +1,10 @@
 import { createStore } from "vuex";
+import useProfile from "@/composables/profile";
+const { profile } = useProfile();
 
 const state = {
-  avatar_url: null,
+  avatar_url: profile.value.avatar,
+  profileStore:profile
 };
 
 const mutations = {
