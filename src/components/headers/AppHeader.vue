@@ -5,21 +5,36 @@
 	import { isAuthentificated } from "@/composables/auth";
 	import cUserMenu from "@/components/userMenu/c-user-menu";
 	import cLanguage from "@/components/userMenu/c-language";
-	import { useRoute } from "vue-router";
+	import { useRoute, useRouter } from "vue-router";
 	import { Autoplay } from "swiper";
 	import { Swiper, SwiperSlide } from "swiper/vue";
 	import { profile } from "@/composables/profile";
+	import store from '../../store/index.js'
+
+
 	// Import Swiper styles
 	import "swiper/css";
 
 	const showLoginModal = ref(false);
 	const showRegisterModal = ref(false);
 	const route = useRoute();
+	const router = useRouter();
 	const headerType = computed(() => {
 		return route.meta?.header || "secondary";
 	});
 	const navOpen = ref(false);
 	// console.log(profile.value);
+
+	const logoUrl = ()=>{
+		console.log(isAuthentificated.value);
+		console.log(store.state.profileStore.type);
+		if(isAuthentificated && store.state.profileStore.type == 'executor'){
+				router.push('/account');
+			}else{
+				router.push('/')
+
+			}
+	};
 </script>
 <style>
 header .swiper-wrapper {
@@ -63,7 +78,7 @@ header .swiper-wrapper {
 					items-center
 				"
 			>
-				<router-link to="/account" class="py-2 mr-12 my-auto w-36 md:w-40">
+				<button @click="logoUrl" class="py-2 mr-12 my-auto w-36 md:w-40">
 					<img
 						:src="
 							require(`@/assets/logo${
@@ -71,7 +86,7 @@ header .swiper-wrapper {
 							}.svg`)
 						"
 					/>
-				</router-link>
+				</button>
 				<div class="block xl:hidden">
 					<button
 						v-on:click="navOpen = !navOpen"

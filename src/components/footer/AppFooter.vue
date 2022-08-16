@@ -1,7 +1,23 @@
 
 <script setup>
-import { ref } from "vue";
+	import { useRoute, useRouter } from "vue-router";
+	import { isAuthentificated } from "@/composables/auth";
+	import store from '../../store/index.js'
+    import { ref } from "vue";
 
+    const route = useRoute();
+	const router = useRouter();
+    
+    const logoUrl = ()=>{
+		console.log(isAuthentificated.value);
+		console.log(store.state.profileStore.type);
+		if(isAuthentificated && store.state.profileStore.type == 'executor'){
+				router.push('/account');
+			}else{
+				router.push('/')
+
+			}
+	};
 </script>
 
 <template>
@@ -260,13 +276,13 @@ import { ref } from "vue";
                 <div class="my-2">
                     <ul>
                         <li class="text-xs sm:text-sm md:text-md lg:text-lg">
-                            <router-link to="/">
+                            <button @click="logoUrl">
                                 <img
                                     src="@/assets/logo-white.svg"
                                     alt=""
                                     class="w-44 mx-auto md:mx-0"
                                 />
-                            </router-link>
+                            </button>
                         </li>
                     </ul>
                 </div>
