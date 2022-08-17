@@ -73,7 +73,7 @@
                     v-if="isEditing"
                     @click="isEditing = false"
                 >
-                    <h-x class="inline -mt-0.5"></h-x>
+                    <h-x class="inline -mt-0.5 w-5 h-5"></h-x>
                     Отмена
                 </wb-button>
             </div>
