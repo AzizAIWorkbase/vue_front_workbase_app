@@ -3,7 +3,7 @@ import useProfile from "@/composables/profile";
 const { profile } = useProfile();
 
 const state = {
-  avatar_url: profile.value.avatar,
+  avatar_url: "",
   profileStore:profile
 };
 
