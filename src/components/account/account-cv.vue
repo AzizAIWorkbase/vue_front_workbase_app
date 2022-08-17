@@ -41,9 +41,9 @@
                         md:mx-0
                     "
                 >
-                    <div class="text-orange-500 font-medium">Заказчик</div>
+                    <div class="text-orange-500 font-medium">{{ OnCreater(profile.type) }}</div>
                     <h2 class="text-xl font-medium mb-2">
-                        Sasha Raimov Doniyorovich
+                        {{ profile.surname }} {{ profile.name }}
                     </h2>
                     <div class="text-green-600 leading-none mb-2">
                         <span
@@ -144,6 +144,7 @@ import { onMounted, reactive, ref, watch, computed } from "vue";
 import AccountSection from "./account-section.vue";
 import WbButton from "./wb-button";
 import { storaImage } from "@/api/uploadImageService"
+import store from '../../store/index.js'
 
 
 import useProfile from "@/composables/profile";
@@ -172,14 +173,22 @@ function uploadImage(){
         .then((response) => {
             newImage.value = response.data?.data;
             let StorageItem = JSON.parse(localStorage.getItem("profile"));
-            console.log(StorageItem);
             StorageItem.avatar = newImage.value;
             localStorage.setItem("profile", JSON.stringify(StorageItem));
             localStorage.setItem("new_image",newImage.value);
+            store.commit('changeImgUrl', newImage.value);
             isLoadImage.value = true;
         }).finally((response)=>{
             file.value = null;
             isLoadImage.value = true;
         });
+}
+
+function OnCreater(a) {
+    if(a == "customer"){
+        return "Заказчик";
+    } else {
+        return "Исполнитель";
+    }
 }
 </script>

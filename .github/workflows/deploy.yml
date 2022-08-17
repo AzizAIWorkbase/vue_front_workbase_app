@@ -16,18 +16,15 @@ jobs:
     steps:
         - name: Checkout Repo
           uses: actions/checkout@v2
-
         - name: Use Node.js ${{ matrix.node-version }}
           uses: actions/setup-node@v3
           with: 
-            node-version: ${{ matrix.node-version }}
-        
+            node-version: ${{ matrix.node-version }} 
         - name: Install Packages and Build Application
           run: |
             npm install -g @vue/cli yarn
             yarn install
             yarn build
-
         - name: Deploy
           uses: AzizAIWorkbase/vue_front_workbase_app@master
           env:

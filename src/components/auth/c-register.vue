@@ -163,7 +163,7 @@
 </template>
 
 <script setup>
-	import { useRegister } from "@/composables/auth";
+	import { useRegister, isAuthentificated } from "@/composables/auth";
 	import { ProfileType } from "@/utils/enums";
 	import useVuelidate from "@vuelidate/core";
 	import {
@@ -175,6 +175,9 @@
 	} from "@vuelidate/validators";
 	import { or } from "@vueuse/core";
 	import { reactive, ref, toRef, watch } from "vue";
+	import { useRouter, useRoute } from 'vue-router';
+	const router = useRouter();
+    const route = useRoute();
 
 	const emit = defineEmits(["successful"]);
 
@@ -305,4 +308,15 @@
 		
 		emit("successful", profile.value);
 	};
+
+	watch(isAuthentificated,() => {
+			console.log("Registered "+ isRegistered.value);
+			console.log("Auth "+ isAuthentificated.value);
+			if(registerState.type==="executor" && isAuthentificated.value===true){
+				router.push({
+					name:'account'
+				});
+			}
+		}
+	);
 </script>

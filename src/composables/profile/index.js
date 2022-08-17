@@ -23,7 +23,7 @@ const isLoaded = ref(false);
 export default function useProfile() {
     const onGet = () => useApi((params) => get(params));
     return {
-        profile: readonly(profile),
+        profile: profile,
         onGet,
     };
 }

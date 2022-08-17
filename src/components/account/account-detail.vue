@@ -5,7 +5,7 @@
             <p class="text-gray-500">Убедитесь в правильности заполнения</p>
         </template>
         <template #default>
-            <div class="grid grid-cols-3 gap-4 -mx-1">
+            <form class="grid grid-cols-3 gap-4 -mx-1">
                 <wb-input
                     label="Имя"
                     :disabled="!isEditing"
@@ -54,7 +54,7 @@
                     placeholder="Не указан"
                     type="text"
                 ></wb-input>
-            </div>
+            </form>
         </template>
         <template #footer>
             <div class="flex gap-4">
@@ -73,7 +73,7 @@
                     v-if="isEditing"
                     @click="isEditing = false"
                 >
-                    <h-x class="inline -mt-0.5"></h-x>
+                    <h-x class="inline -mt-0.5 w-5 h-5"></h-x>
                     Отмена
                 </wb-button>
             </div>
@@ -99,11 +99,11 @@ watch(isLoaded, () => {
 });
 
 const state = reactive({
-    name: "",
-    surname: "",
-    patronymic: "",
-    birthday: "",
-    gender: null,
-    address: "",
+    name: profile.value.name,
+    surname: profile.value.surname,
+    patronymic: profile.value.patronymic,
+    birthday: profile.value.birthday,
+    gender: profile.value.gender,
+    address: profile.value.address,
 });
 </script>

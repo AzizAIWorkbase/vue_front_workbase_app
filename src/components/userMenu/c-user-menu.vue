@@ -31,7 +31,6 @@
 							ring-2 ring-white
 						"
 						:src="image_url()"
-						alt="user default avatar"
 					/>
 				</div>
 				<div class="flex items-center">
@@ -71,8 +70,9 @@
 					xl:border-primary
 				"
 			>
-				<router-link
+				<button
 					to="/"
+					@click="swapUserType"
 					class="
 						xl:flex
 						block
@@ -91,7 +91,7 @@
 					"
 				>
 					{{ anti_type_user }}
-				</router-link>
+				</button>
 				<a
 					@click.prevent.stop="!isLoading ? onLogout() : null"
 					href="javascript:;"
@@ -124,13 +124,15 @@
 	import useProfile from "@/composables/profile";
 	import { computed, onMounted, onUnmounted, ref, watch } from "@vue/runtime-core";
 	import { useRoute, useRouter } from "vue-router";
+	import store from '../../store/index.js';
 	import { useStore } from 'vuex'
+
 	const show = ref(false);
 	const route = useRoute();
 	const router = useRouter();
 
 	const { profile } = useProfile();
-	const store = useStore();
+	// const store = useStore();
 
 	const { isLoading, data, error, onLogout } = useLogout();
 
@@ -176,22 +178,29 @@
 		}
 	);
 	console.log('App header in outside');
-	const image_url = ()=>{
-		if(localStorage.getItem('profile') != null){
-			return store.state.profile?.avatar != "" ? store.state.profile.avatar : require('../../assets/images/user.png');
-		}else {
+	const image_url = () => {
+		if( store.state.avatar_url != null){
+			return store.state.avatar_url;
+		} 
+		else if (localStorage.getItem('profile') != null){
+			return profile.value.avatar; 
+		}
+		else {
 			return require('../../assets/images/user.png');
 		}
 	};
-
-	console.log('profile state '+store.state.profile.avatar);
-	// // let profile_local = JSON.parse(ls.get('profile'));
-	// console.log('new image localstorage');
-	// console.log(ls.getItem('new_image').value);
-	// console.log(ls.getItem('token').value);
-	// // ls.on('new_image',()=>{
-	// // 	console.log('App header on profile ls');
-	// // 	console.log('I am watching profile value');
-	// // });
-	
+	const swapUserType = ()=>{
+		let user_type = store.state.profileStore.type;
+		console.log(store.state.profileStore);
+		//let StorageItem = JSON.parse(localStorage.getItem("profile"));
+        user_type = user_type == "executor" ? "customer" : "executor";
+        //localStorage.setItem("profile", JSON.stringify(StorageItem));
+		store.state.profileStore.type = user_type;
+		
+		if(store.state.profileStore.type == "executor"){
+			router.push('/account');
+		}else{
+			router.push('/');
+		}
+	};
 </script>
