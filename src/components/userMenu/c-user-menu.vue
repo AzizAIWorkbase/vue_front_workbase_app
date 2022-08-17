@@ -30,7 +30,7 @@
               rounded-full
               ring-2 ring-white
             "
-            :src="image_url()"
+            :src="image_url"
           />
         </div>
         <div class="flex items-center">
@@ -184,13 +184,13 @@ watch(isLoading, () => {
 });
 console.log("App header in outside");
 
-const image_url = () => {
+const image_url = computed(() => {
   if (store.state.avatar_url == null || store.state.avatar_url == "") {
     return require("../../assets/images/user.png");
   } else {
     return store.state.avatar_url;
   }
-};
+});
 const swapUserType = () => {
   let user_type = store.state.profileStore.type;
   console.log(store.state.profileStore);

@@ -195,13 +195,12 @@ import store from "../../store/index.js";
 
 const showImageModal = ref(false);
 const profile = ref(store.state.profileStore);
-const newImage = ref(store.state.avatar_url);
 
 const image_url = computed(() => {
-  if (newImage.value == "" || newImage.value == null) {
+  if (store.state.avatar_url == null || store.state.avatar_url == "") {
     return require("../../assets/images/user.png");
   } else {
-    return newImage.value;
+    return store.state.avatar_url;
   }
 });
 
@@ -218,8 +217,8 @@ function handle(event) {
 function uploadImage() {
   storaImage(file.value, profile.value.id)
     .then((response) => {
-      newImage.value = response.data?.data;
-      store.commit("changeImgUrl", newImage.value);
+      const avatar = response.data?.data;
+      store.commit("changeImgUrl", avatar);
       isLoadImage.value = true;
     })
     .finally((response) => {
@@ -238,12 +237,15 @@ function OnCreater(a) {
 
 async function onDeleteAvatar() {
   const id = profile.value.id;
+  const img = profile.value.avatar;
 
-  try {
-    await deleteUserImage(id);
-    store.commit("changeImgUrl", "");
-  } catch (err) {
-    console.log(err);
+  if (img != "" && img != null) {
+    try {
+      await deleteUserImage(id);
+      store.commit("changeImgUrl", "");
+    } catch (err) {
+      console.log(err);
+    }
   }
 }
 </script>
