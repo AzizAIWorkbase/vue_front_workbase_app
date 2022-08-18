@@ -45,6 +45,14 @@
                 rounded-full
                 cursor-pointer
               "
+              :class="{ 'opacity-0': isImgUplading }"
+            />
+
+            <img
+              class="w-full h-full absolute top-0"
+              :class="{ hidden: !isImgUplading }"
+              src="../../assets/images/loading-spinner.svg"
+              alt="Spinner"
             />
           </div>
         </div>
@@ -118,15 +126,6 @@
     </template>
     <template #footer>
       <div class="gap-4 flex flex-wrap justify-center md:justify-start">
-        <div class="flex gap-4">
-          <wb-button
-            :disabled="!isNamePresent"
-            type="primary"
-            @click="uploadImage"
-          >
-            Upload
-          </wb-button>
-        </div>
         <div class="">
           <span>
             <svg
@@ -193,23 +192,22 @@ const image_url = computed(() => {
 const isEditing = ref(false);
 
 const file = reactive({});
-const isNamePresent = computed(() => file.value != null);
-const isLoadImage = ref(false);
+const isImgUplading = ref(false);
 
 function uploadImage() {
   storaImage(file.value, profile.value.id)
     .then((response) => {
       const avatar = response.data?.data;
       store.commit("changeImgUrl", avatar);
-      isLoadImage.value = true;
     })
     .finally((response) => {
       file.value = null;
-      isLoadImage.value = true;
+      isImgUplading.value = false;
     });
 }
 
 function handle(event) {
+  isImgUplading.value = true;
   file.value = event.target.files[0];
   uploadImage();
 }
