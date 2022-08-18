@@ -176,6 +176,7 @@ import AccountSection from "./account-section.vue";
 import WbButton from "./wb-button";
 import { storaImage } from "@/api/uploadImageService";
 import { deleteUserImage } from "@/api/profile/image";
+import { getCommentAndReviews } from "@/api/profile/comment";
 import store from "../../store/index.js";
 
 const showImageModal = ref(false);
@@ -233,6 +234,15 @@ async function onDeleteAvatar() {
     }
   }
 }
+
+const commentData = ref(null);
+getCommentAndReviews(profile.value.id)
+  .then((data) => {
+    console.log(data);
+    commentData.value = data;
+  })
+  .catch((err) => console.log(err));
+console.log("comment data: ", commentData.value);
 </script>
 
 
