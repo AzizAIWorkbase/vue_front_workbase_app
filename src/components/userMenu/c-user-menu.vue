@@ -70,7 +70,7 @@
           xl:border-primary
         "
       >
-        <button
+        <a
           to="/"
           @click="swapUserType"
           class="
@@ -88,10 +88,11 @@
             hover:ease-in
             text-white
             xl:text-primary
+            cursor-pointer
           "
         >
           {{ anti_type_user }}
-        </button>
+        </a>
         <a
           @click.prevent.stop="!isLoading ? onLogout() : null"
           href="javascript:;"
