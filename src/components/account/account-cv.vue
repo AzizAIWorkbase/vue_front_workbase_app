@@ -12,8 +12,20 @@
               <div class="img-click" @click="showImageModal = true"></div>
               <div class="img-inner">
                 <div class="img-icons">
-                  <button type="button">
-                    <h-pencil class="inline -mt-0.5 w-5 h-5"></h-pencil>
+                  <input
+                    class="form-control-file d-none"
+                    id="myfile"
+                    type="file"
+                    @change="handle"
+                    hidden
+                    accept="image/*"
+                    name="img"
+                  />
+
+                  <button type="button" class="cursor-pointer">
+                    <label class="select-none cursor-pointer" for="myfile">
+                      <h-pencil class="inline -mt-0.5 w-5 h-5"></h-pencil
+                    ></label>
                   </button>
 
                   <button type="button" @click="onDeleteAvatar">
@@ -35,32 +47,6 @@
               "
             />
           </div>
-          <input
-            class="form-control-file d-none"
-            id="myfile"
-            type="file"
-            @change="handle"
-            hidden
-            accept="image/*"
-            name="img"
-          />
-          <label
-            class="
-              select-none
-              text-white
-              bg-primary
-              rounded-md
-              px-4
-              py-2
-              transition-all
-              duration-200
-              shadow-lg
-              transform
-              scale-100
-            "
-            for="myfile"
-            >Choose file</label
-          >
         </div>
         <div
           class="
@@ -210,10 +196,6 @@ const file = reactive({});
 const isNamePresent = computed(() => file.value != null);
 const isLoadImage = ref(false);
 
-function handle(event) {
-  file.value = event.target.files[0];
-}
-
 function uploadImage() {
   storaImage(file.value, profile.value.id)
     .then((response) => {
@@ -225,6 +207,11 @@ function uploadImage() {
       file.value = null;
       isLoadImage.value = true;
     });
+}
+
+function handle(event) {
+  file.value = event.target.files[0];
+  uploadImage();
 }
 
 function OnCreater(a) {
