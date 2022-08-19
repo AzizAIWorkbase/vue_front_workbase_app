@@ -238,11 +238,9 @@ async function onDeleteAvatar() {
 const commentData = ref(null);
 getCommentAndReviews(profile.value.id)
   .then((data) => {
-    console.log(data);
     commentData.value = data;
   })
   .catch((err) => console.log(err));
-console.log("comment data: ", commentData.value);
 </script>
 
 
