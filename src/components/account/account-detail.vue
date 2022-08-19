@@ -57,7 +57,7 @@
             <h-pencil class="inline -mt-0.5"></h-pencil>
             Редактировать
           </span>
-          <span v-if="isEditing" @click="updateUserProfile">
+          <span v-if="isEditing">
             <h-cloud-upload class="inline -mt-0.5"></h-cloud-upload>
             Сохранить
           </span>
@@ -111,8 +111,6 @@ function updateUserProfile(event) {
     is_remotely: oldData.is_remotely,
     email: oldData.email,
   };
-
-  // return console.log(data);
 
   updateProfile(data, profile.value.id)
     .then((response) => {
