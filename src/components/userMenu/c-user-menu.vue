@@ -152,6 +152,7 @@ const escapePressedListener = (e) => {
 const outsideClickListener = (e) => {
   show.value = false;
 };
+
 onMounted(() => {
   document.addEventListener("keyup", escapePressedListener);
   document.addEventListener("click", outsideClickListener);
@@ -162,19 +163,20 @@ onUnmounted(() => {
 });
 
 const type_user = computed(() => {
-  if (store.state.profileStore.value == "customer") {
+  if (store.state.profileStore.type == "customer") {
     return "Я заказчик";
   } else {
     return "Я исполнитель";
   }
 });
 const anti_type_user = computed(() => {
-  if (store.state.profileStore.value == "customer") {
+  if (store.state.profileStore.type == "customer") {
     return "Я исполнитель";
   } else {
     return "Я заказчик";
   }
 });
+
 watch(isLoading, () => {
   console.log(isLoading.value);
   if (isLoading.value === false) {
@@ -192,6 +194,7 @@ const image_url = computed(() => {
     return store.state.avatar_url;
   }
 });
+
 const swapUserType = () => {
   let user_type = store.state.profileStore.type;
   console.log(store.state.profileStore);
@@ -199,6 +202,7 @@ const swapUserType = () => {
   user_type = user_type == "executor" ? "customer" : "executor";
   //localStorage.setItem("profile", JSON.stringify(StorageItem));
   store.state.profileStore.type = user_type;
+  console.log(store.state.profileStore.type);
 
   if (store.state.profileStore.type == "executor") {
     router.push("/account");
