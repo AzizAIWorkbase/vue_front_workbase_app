@@ -1,5 +1,5 @@
 
-import { createRouter, createWebHistory, createWebHashHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import user_type from '@/composables/middleware/user_middleware';
 import auth from '@/composables/middleware/auth';
@@ -173,8 +173,8 @@ const routes = [
 ];
 
 const router = createRouter({
-  // history: createWebHistory(process.env.BASE_URL),
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
+  // history: createWebHashHistory(),
   routes,
   scrollBehavior() {
     document.getElementById("page").scrollIntoView();
