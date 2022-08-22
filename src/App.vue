@@ -1,6 +1,6 @@
 <template>
 	<!-- TODO: в дальнейшем для темной темы будем использовать этот цвет "dark:bg-slate-900" -->
-	<div
+	<div ref="scrollContent"
 		class="
 			min-h-screen
 			max-h-screen
@@ -24,7 +24,16 @@
 	import useProfile from "./composables/profile";
 	import { isAuthentificated } from "./composables/auth";
 	import { PrivateChannel } from "pusher-js";
+	import { useScroll } from "@vueuse/core";
+	import store from './store/index'
 	const { exec, isLoaded } = useSetttings();
+
+	
+	const scrollContent = ref(null);
+	const scrollProps = useScroll(scrollContent);
+	store.commit('changeScrollProps', scrollProps)
+
+	
 
 	onMounted(async () => {
 		if (!isLoaded.value) await exec();
