@@ -57,7 +57,7 @@
             <h-pencil class="inline -mt-0.5"></h-pencil>
             Редактировать
           </span>
-          <span v-if="isEditing">
+          <span v-if="isEditing" @click="updateUserProfile">
             <h-cloud-upload class="inline -mt-0.5"></h-cloud-upload>
             Сохранить
           </span>
@@ -125,7 +125,8 @@ function updateUserProfile(event) {
       localData.gender = resData.gender;
       localData.address = resData.address;
 
-      return localStorage.setItem("profile", JSON.stringify(localData));
+      localStorage.setItem("profile", JSON.stringify(localData));
+      console.log("success!");
     })
     .catch((err) => console.log(err));
 }
