@@ -197,12 +197,10 @@ const image_url = computed(() => {
 
 const swapUserType = () => {
   let user_type = store.state.profileStore.type;
-  console.log(store.state.profileStore);
   //let StorageItem = JSON.parse(localStorage.getItem("profile"));
   user_type = user_type == "executor" ? "customer" : "executor";
   //localStorage.setItem("profile", JSON.stringify(StorageItem));
   store.state.profileStore.type = user_type;
-  console.log(store.state.profileStore.type);
 
   if (store.state.profileStore.type == "executor") {
     router.push("/account");
