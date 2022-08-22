@@ -1,4 +1,4 @@
-<template>
+<template     ref="content">
   <div
     class="
       grid
@@ -27,8 +27,9 @@
     >
       <div class="lg:sticky top-[7.25rem]">
         <ul class="flex flex-row lg:flex-col gap-3">
+          <!-- @click="onElementClick(item)" -->
           <li
-            @click="onElementClick(item)"
+            @click="onToggleHandler(item)"
             class="
               text-md text-primary
               font-medium
@@ -121,9 +122,12 @@ import ProfileDocuments from "@/components/account/documents/c-section.vue";
 import ProfileWorks from "@/components/account/works/c-section.vue";
 import ProfileSettings from "@/components/account/settings/c-section.vue";
 import ProfileIdentifications from "@/components/account/identifications/c-section.vue";
-import { onMounted, reactive } from "vue";
-import { useResizeObserver } from "@vueuse/core";
+import { onMounted, reactive, ref, computed, watch } from "vue";
+import { useResizeObserver, useScroll } from "@vueuse/core";
+import store from "../store/index";
+
 import useProfile from "@/composables/profile/index.js";
+import { forEach } from "core-js/internals/enum-bug-keys";
 
 const { profile, onGet } = useProfile();
 const { exec, isLoading, isLoaded } = onGet();
@@ -178,52 +182,31 @@ const items = reactive({
   },
 });
 
-// function onElementClick(clickedItem) {
-//   for (let item in items) {
-//     items[item].isActive = false;
-//   }
+function onToggleHandler(clickedItem) {
+  for (let item in items) {
+    items[item].isActive = false;
+  }
 
-//   clickedItem.isActive = true;
-// }
+  clickedItem.isActive = true;
+}
 
 onMounted(() => {
-  document.querySelectorAll(".spy").forEach((e) => {
-    if (items[e.id]) {
-      items[e.id].top = e.offsetTop;
-    }
-  });
-  useResizeObserver(document.documentElement, () => {
-    document.querySelectorAll(".spy").forEach((e) => {
-      if (items[e.id]) {
-        items[e.id].top = e.offsetTop;
+  const sections = document.querySelectorAll(".spy");
+  const headerHeight = document.querySelector("header").clientHeight;
+
+  watch(store.state.scrollProps, () => {
+    const { y } = store.state.scrollProps;
+    // console.log(y);
+
+    sections.forEach((el, index) => {
+      if (y + headerHeight + 60 >= el.offsetTop && y < y + el.offsetTop) {
+        for (let item in items) {
+          items[item].isActive = false;
+        }
+        const id = el.getAttribute("id");
+        items[id].isActive = true;
       }
     });
-    const { scrollTop } = document.documentElement;
-    for (const [id, menu] of Object.entries(items)) {
-      if (menu.top < scrollTop + 7 * 16 + 50) {
-        items[id].isActive = true;
-        for (const [newId, newMenu] of Object.entries(items)) {
-          if (newId == id) continue;
-          items[newId].isActive = false;
-        }
-      } else {
-        items[id].isActive = false;
-      }
-    }
-  });
-  document.addEventListener("scroll", (e) => {
-    const { scrollTop } = e.target.documentElement;
-    for (const [id, menu] of Object.entries(items)) {
-      if (menu.top < scrollTop + 7 * 16 + 50) {
-        items[id].isActive = true;
-        for (const [newId, newMenu] of Object.entries(items)) {
-          if (newId == id) continue;
-          items[newId].isActive = false;
-        }
-      } else {
-        items[id].isActive = false;
-      }
-    }
   });
 });
 </script>
