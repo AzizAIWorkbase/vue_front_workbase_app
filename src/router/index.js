@@ -1,8 +1,12 @@
-
-import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import user_type from '@/composables/middleware/user_middleware';
-import auth from '@/composables/middleware/auth';
+import {
+  createRouter,
+  createWebHistory,
+  createWebHashHistory,
+} from "vue-router";
+import HomeView from "../views/HomeView.vue";
+import user_type from "@/composables/middleware/user_middleware";
+import auth from "@/composables/middleware/auth";
+import checkExecutor from "@/middleware/check-executor";
 
 const routes = [
   {
@@ -10,6 +14,7 @@ const routes = [
     name: "home",
     component: HomeView,
     meta: { header: "primary" },
+    beforeEnter: checkExecutor,
   },
   {
     path: "/:categorySlug",

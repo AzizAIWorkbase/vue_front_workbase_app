@@ -93,7 +93,8 @@ function updateUserAbout(event) {
       localData.excerpt = resData.excerpt;
       localData.description = resData.description;
 
-      return localStorage.setItem("profile", JSON.stringify(localData));
+      localStorage.setItem("profile", JSON.stringify(localData));
+      console.log("success!");
     })
     .catch((err) => console.log(err));
 }
